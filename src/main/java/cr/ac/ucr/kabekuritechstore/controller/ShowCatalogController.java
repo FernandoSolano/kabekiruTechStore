@@ -15,6 +15,7 @@ public class ShowCatalogController {
 	
 	@RequestMapping(value="/catalog", method=RequestMethod.GET)
 	public String init(Model model){
+		model.addAttribute("products", productService.findAll());
 		return "catalog";
 	}
 }

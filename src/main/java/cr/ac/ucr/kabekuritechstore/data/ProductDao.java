@@ -27,7 +27,10 @@ public class ProductDao {
 	}
 	
 	public List<Product> findAll(){
-		String sqlSelect = "";
+		String sqlSelect = "SELECT p.id, p.name, p.image_id, p.description,"
+				+ " p.price, p.units_on_stock, c.id AS category_id, c.name AS category_name"
+				+ " FROM products p, categories c"
+				+ " WHERE p.category_id=c.id";
 		return jdbcTemplate.query(sqlSelect, new findAllProductsExtractor());
 	}
 	
@@ -37,15 +40,18 @@ public class ProductDao {
 			Map<Integer, Product> map = new HashMap<Integer, Product>();
 			Product product = new Product();
 			while (rs.next()) {
-				Integer codigo = rs.getInt("num_libro");
-				product = map.get(codigo);
+				Integer id = rs.getInt("num_libro");
+				product = map.get(id);
 				if (product == null) {
-					/*product = new Libro();
-					product.setCodigo(codigo);
-					product.setTitulo(rs.getString("titulo_libro"));
-					product.setAnoPublicacion(rs.getInt("ano_publicacion"));
-					product.getPublicador().setNombre(rs.getString("nombre_publicador"));*/
-					map.put(codigo, product);
+					product = new Product();
+					product.setId(id);
+					product.setName(rs.getString("name"));
+					product.setDescription(rs.getString("description"));
+					product.setPrice(rs.getFloat("price"));
+					product.setUnitsOnStock(rs.getInt("units_on_stock"));
+					product.getCategory().setId(rs.getInt("category_id"));
+					product.getCategory().setName(rs.getString("category_name"));
+					map.put(id, product);
 				}
 			}
 			return new ArrayList<Product>(map.values());
