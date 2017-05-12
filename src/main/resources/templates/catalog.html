@@ -31,9 +31,13 @@
     			<div class="thumbnail">
     				<img src="http://placehold.it/320x150" alt=""/>
     				<div class="caption">
-    					<h4 class="pull-right">$<a th:text="${entry.description}"/></h4>
+    					<h4 class="pull-right"><a>$</a><a th:text="${entry.price}"/></h4>
     					<h4><a href="#" th:text="${entry.name}"/></h4>
     					<p th:text="${entry.description}"/>
+    				</div>
+    				<div>
+    					<button class="btn btn-success col-md-5"><span class="glyphicon glyphicon-search"/> Details</button>
+    					<button class="btn btn-primary col-md-offset-2 col-md-5"><span class="glyphicon glyphicon-shopping-cart"/> Add to cart</button>
     				</div>
     				<div class="ratings">
     					<p class="pull-right">15 reviews</p>

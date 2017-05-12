@@ -40,7 +40,7 @@ public class ProductDao {
 			Map<Integer, Product> map = new HashMap<Integer, Product>();
 			Product product = new Product();
 			while (rs.next()) {
-				Integer id = rs.getInt("num_libro");
+				Integer id = rs.getInt("id");
 				product = map.get(id);
 				if (product == null) {
 					product = new Product();
