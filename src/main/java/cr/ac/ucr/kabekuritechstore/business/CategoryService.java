@@ -17,4 +17,8 @@ public class CategoryService {
 	public List<Category> findAll(){
 		return categoryDao.findAll();
 	}
+	
+	public Category insertCategory(Category category){
+		return categoryDao.insertCategory(category);
+	}
 }
