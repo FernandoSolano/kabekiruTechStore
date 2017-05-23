@@ -27,7 +27,7 @@ public class ProductDao {
 	}
 	
 	public List<Product> findAll(){
-		String sqlSelect = "SELECT p.id, p.name, p.image_id, p.description,"
+		String sqlSelect = "SELECT p.id, p.name, p.image_url, p.description,"
 				+ " p.price, p.units_on_stock, c.id AS category_id, c.name AS category_name"
 				+ " FROM products p, categories c"
 				+ " WHERE p.category_id=c.id";
@@ -49,6 +49,7 @@ public class ProductDao {
 					product.setDescription(rs.getString("description"));
 					product.setPrice(rs.getFloat("price"));
 					product.setUnitsOnStock(rs.getInt("units_on_stock"));
+					product.setImage_url(rs.getString("image_url"));
 					product.getCategory().setId(rs.getInt("category_id"));
 					product.getCategory().setName(rs.getString("category_name"));
 					map.put(id, product);

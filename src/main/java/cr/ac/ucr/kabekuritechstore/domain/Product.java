@@ -3,9 +3,8 @@ package cr.ac.ucr.kabekuritechstore.domain;
 public class Product {
 	private int id, unitsOnStock;
 	private Category category;
-	private String name, description;
+	private String name, description, image_url;
 	private float price;
-	//private Image image;
 	
 	public Product() {
 		this.category=new Category();
@@ -57,5 +56,13 @@ public class Product {
 
 	public void setPrice(float price) {
 		this.price = price;
+	}
+
+	public String getImage_url() {
+		return image_url;
+	}
+
+	public void setImage_url(String image_url) {
+		this.image_url = image_url;
 	}
 }
