@@ -1,10 +1,11 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8"/>
-<title>User Sign Up</title>
+<meta charset="ISO-8859-1"/>
+<title>User login</title>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous"/>
 </head>
+
 <body style="background:black">
 	<nav class="navbar navbar-default" style="background:white">
   		<div class="container-fluid">
@@ -26,33 +27,17 @@
     	</div>
     </nav>
     <div class="container">
-    	<form class="well col-md-offset-2 col-md-8">
+    	<form class="well col-md-offset-3 col-md-6">
     		<h1>User Sign Up</h1>
-    		<div class="form-group col-md-6">
-    			<label for="first_name">First name</label>
-    			<input id="first_name" type="text" required="true" class="form-control"/>
-    		</div>
-    		<div class="form-group col-md-6">
-    			<label for="last_name">Last name</label>
-    			<input id="last_name" type="text" required="true" class="form-control"/>
-    		</div>
-    		<div class="form-group">
-    			<label for="email">Email</label>
-    			<input id="email" type="email" required="true" class="form-control"/>
-    		</div>
     		<div class="form-group">
     			<label for="username">Username</label>
     			<input id="username" type="text" required="true" class="form-control"/>
     		</div>
-    		<div class="form-group col-md-6">
+    		<div class="form-group">
     			<label for="password">Password</label>
     			<input id="password" type="password" required="true" class="form-control"/>
     		</div>
-    		<div class="form-group col-md-6">
-    			<label for="password_conf">Reenter password</label>
-    			<input id="password_conf" type="password" required="true" class="form-control"/>
-    		</div>
-    		<button type="submit" class="btn btn-primary col-md-offset-8 col-md-4"><span class="glyphicon glyphicon-edit"/>   Submit</button>
+    		<button type="submit" class="btn btn-primary col-md-offset-8 col-md-4"><span class="glyphicon glyphicon-log-in"/>   Login</button>
     	</form>
     </div>
 </body>
