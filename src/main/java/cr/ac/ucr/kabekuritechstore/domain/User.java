@@ -1,5 +1,8 @@
 package cr.ac.ucr.kabekuritechstore.domain;
 
+import java.util.LinkedList;
+import java.util.List;
+
 public class User {
 	
 	private int userID;
@@ -9,10 +12,13 @@ public class User {
 	private String userName;
 	private String password;
 	private boolean enabled;
+	private Role role;
+	private LinkedList<ShippingAddress> addresses;
 	
 	
 	public User() {
-		
+		role = new Role();
+		addresses = new LinkedList<>();
 	}
 
 
@@ -73,6 +79,16 @@ public class User {
 
 	public void setPassword(String password) {
 		this.password = password;
+	}
+	
+
+	public Role getRoleId() {
+		return role;
+	}
+
+
+	public void setRoleId(Role role) {
+		this.role = role;
 	}
 
 
