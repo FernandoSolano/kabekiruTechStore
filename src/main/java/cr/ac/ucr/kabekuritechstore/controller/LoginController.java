@@ -22,7 +22,8 @@ public class LoginController {
 	private static User userLogged;
 
 	@RequestMapping(value="/login", method=RequestMethod.GET)
-	public String showLogin(){
+	public String showLogin(Model model){
+		model.addAttribute("userLogged", userLogged);
 		return "login";
 	}
 	
@@ -34,8 +35,9 @@ public class LoginController {
 		String password = requestParams.get("password");
 		
 		userLogged = userService.userValidation(username, password);
+		model.addAttribute("userLogged", userLogged);
 		
-		if(userLogged != null){
+		if(userLogged != null){						
 			if(userLogged.getRoleId().getType().equals("ADMIN")){
 				return "login";
 			}else{
