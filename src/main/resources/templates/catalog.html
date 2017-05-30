@@ -22,8 +22,14 @@
 			<ul class="nav navbar-nav navbar-right">
 				<li><a href="#"><span
 						class="glyphicon glyphicon-shopping-cart" style="font-size: 2em"></span></a></li>
-				<li><a href="#" style="font-size: 2em"><span
-						class="glyphicon glyphicon-log-in"></span> Login</a></li>
+				<div th:if="${userLogged == null}">
+					<li><a href="#" th:href="@{/login}" style="font-size: 2em"><span
+							class="glyphicon glyphicon-log-in"></span>Login</a></li>
+				</div>	
+				<div th:if="${userLogged != null}">
+				<li><a href="#" th:href="@{/login}" style="font-size: 2em"><span
+						class="glyphicon glyphicon-log-out"></span>Logout</a></li>
+				</div>
 			</ul>
 		</div>
 	</nav>
