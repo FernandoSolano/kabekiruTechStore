@@ -15,4 +15,8 @@ public class UserService {
 	public User insertUser(User user){
 		return userDao.insertUser(user);
 	}
+	
+	public User userValidation(String username, String password){
+		return userDao.userValidation(username, password);
+	}
 }
