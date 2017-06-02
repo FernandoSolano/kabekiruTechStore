@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8"/>
+<title>Resume</title>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous" />
+</head>
+<body style="background: black">
+
+	<nav class="navbar navbar-default" style="background: white">
+		<div class="container-fluid">
+			<div class="navbar-header">
+				<div class="logo">
+					<a th:href="@{/catalog}"><img src="/images/kabekiru_main_logo_header.png"/></a>
+				</div>
+			</div>
+			<ul class="nav navbar-nav">
+				<li><a th:href="@{/catalog/category/(category_id=${1})}" style="font-size: 1em">Laptops</a></li>
+				<li><a th:href="@{/catalog/category/(category_id=${3})}" style="font-size: 1em">Desktops</a></li>
+				<li><a th:href="@{/catalog/category/(category_id=${2})}" style="font-size: 1em">Smartphones</a></li>
+				<li><a th:href="@{/catalog/category/(category_id=${4})}" style="font-size: 1em">VR</a></li>
+			</ul>
+			<ul class="nav navbar-nav navbar-right">
+				<li>
+					<a href="#" th:href="@{/cart}"><span class="glyphicon glyphicon-shopping-cart" style="font-size: 2em"></span></a>
+				</li>
+				<li th:if="${userLogged == null}">
+					<a href="#" th:href="@{/login}" style="font-size: 1em"><span class="glyphicon glyphicon-log-in"></span> Login</a>
+				</li>
+				<li th:if="${userLogged != null}">
+					<a href="#" th:href="@{/logout}" style="font-size: 1em"><span class="glyphicon glyphicon-log-out"></span> Logout</a>
+				</li>
+			</ul>
+		</div>
+	</nav>
+
+	<div class="well container">
+		<div class="row">
+			<div th:if="newOrder">
+				<div th:if="${newOrder == null}">
+					<p>No hay articulos para facturar</p>
+				</div>
+				<div th:if="${newOrder != null}" class="table-responsive">
+					<h2>Resumen de la compra:</h2>
+					<div class="container">
+						<h3>Datos de la Orden:</h3>
+						
+						<div class="caption">	
+							<h4 class="pull-right">
+								<a>Orden: </a><a th:text="${newOrder.id}"/>
+							</h4>
+							<h4 class="pull-right">
+								<a>Cliente: </a><a th:text="${newOrder.user.userId}"/>
+							</h4>
+							<h4 class="pull-right">
+								<a>Estado: </a><a th:text="${newOrder.status}"/>
+							</h4>
+							<h4 class="pull-right">
+								<a>Fecha Compra: </a><a th:text="${newOrder.orderDate}"/>
+							</h4>
+							<h4 class="pull-right">
+								<a>Fecha Llegada: </a><a th:text="${newOrder.shipDate}"/>
+							</h4>
+							<h4 class="pull-right">
+								<a>Numero de rastreo: </a><a th:text="${newOrder.trackingNumber}"/>
+							</h4>
+							<h4 class="pull-right">
+								<a>Total: </a><a th:text="${newOrder.total}"/>
+							</h4>
+						</div>
+							
+						<div class="caption">
+							<h3>Detalles de la Orden</h3>
+							
+							<div th:if="${!newOrder.orderDetails.isEmpty()}">
+								<table class="table table-hover table-striped">
+						<tr>
+		    				<th class="text-center">Nombre</th>
+		    				<th class="text-center">Descripcion</th>    		
+		    				<th class="text-center">Categoria</th>
+		    				<th class="text-center">Precio</th>
+		    				<th class="text-center">Cantidad</th>	    				
+		  				</tr>
+		  		
+		  				<tr th:each="entry,status : ${newOrder.orderDetails}">
+				    		<td class="text-center"><span th:text="${entry.product.name}"></span> </td>
+				    		<td class="text-center"><span th:text="${entry.product.description}"></span> </td>
+				    		<td class="text-center"><span th:text="${entry.product.category.name}"></span> </td>
+				    		<td class="text-center"><span th:text="${entry.product.price}"></span> </td>
+				    		<td class="text-center"><span th:text="${entry.quantity}"></span> </td>
+		 				</tr>
+					</table>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	
+	<div id="footer" style="background: white">
+		<div class="container">
+			<div class="row">
+				<h3 class="footertext">About the site:</h3>
+				<div class="col-md-4">
+					<center>
+						<img src="http://oi60.tinypic.com/w8lycl.jpg" class="img-circle" alt="the-brains"/> <br/>
+						<h4 class="footertext">Developers</h4>
+						<p class="footertext"/>
+							Dennis Madriz<br/>
+							Fernando Solano<br/>
+							Gustavo Solano<br/>
+					</center>
+				</div>
+				<div class="logo col-md-4">
+					<center><img src="/images/kabekiru_main_logo.png" style="width: 197px; height: 151px" /></center>
+				</div>
+				<div class="logo col-md-4">
+					<center><img src="/images/spring_logo.png" style="width: 188px; height: 110px" /></center>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

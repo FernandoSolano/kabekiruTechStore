@@ -14,20 +14,27 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import cr.ac.ucr.kabekuritechstore.business.ProductService;
+import cr.ac.ucr.kabekuritechstore.business.ShoppingCartService;
+import cr.ac.ucr.kabekuritechstore.domain.Order;
+import cr.ac.ucr.kabekuritechstore.domain.OrderDetail;
 import cr.ac.ucr.kabekuritechstore.domain.Product;
 
 @Controller
 public class ShoppingCartController {
 
 	// Lista de productos
-	List<Product> shoppingCartList = new LinkedList<Product>();
+	//List<Product> shoppingCartList = new LinkedList<Product>();
+	public static List<OrderDetail> orderDetails = new LinkedList<OrderDetail>();
 	
 	@Autowired
 	ProductService productService;
 	
+	@Autowired
+	ShoppingCartService shoppingCartService;
+	
 	@RequestMapping(value="/cart", method=RequestMethod.GET)
 	public String showCart(Model model){
-		model.addAttribute("products", shoppingCartList);
+		model.addAttribute("details", orderDetails);
 		return "shoppingCart";
 	}
 	
@@ -39,7 +46,15 @@ public class ShoppingCartController {
 		Product product = productService.findProductById(productId);
 		
 		if(product != null){
-			shoppingCartList.add(product);			
+			
+			OrderDetail currentOrderDetail = new OrderDetail();
+			
+			currentOrderDetail.setId(orderDetails.size() + 1);
+			currentOrderDetail.setQuantity(1);
+			currentOrderDetail.setPrice(product.getPrice());
+			currentOrderDetail.setProduct(product);
+			
+			orderDetails.add(currentOrderDetail);			
 		}
 		
 		model.addAttribute("products", productService.findAll());
@@ -50,16 +65,77 @@ public class ShoppingCartController {
 	@RequestMapping(value = "/quitFromCart/{id}/**", method = RequestMethod.GET)
 	public String quitFromCart(@PathVariable String id, HttpServletRequest request, Model model){
 		
-		int productId = Integer.parseInt(new AntPathMatcher().extractPathWithinPattern("/{id}/**", request.getRequestURI())); 
+		int detailId = Integer.parseInt(new AntPathMatcher().extractPathWithinPattern("/{id}/**", request.getRequestURI())); 
 		
-		for (Product product : shoppingCartList) {
-			if(product.getId() == productId){
-				shoppingCartList.remove(product);
+		for (OrderDetail detail : orderDetails) {
+			if(detail.getId() == detailId){
+				orderDetails.remove(detail);
 			}
 		}
 		
-		model.addAttribute("products", shoppingCartList);
+		model.addAttribute("details", orderDetails);
 		
 		return "shoppingCart";
 	}
+	
+	@RequestMapping(value = "/addOneItem/{id}/**", method = RequestMethod.GET)
+	public String addOneItem(@PathVariable String id, HttpServletRequest request, Model model){
+		
+		int detailId = Integer.parseInt(new AntPathMatcher().extractPathWithinPattern("/{id}/**", request.getRequestURI())); 
+		
+		for (OrderDetail detail : orderDetails) {
+			if(detail.getId() == detailId){
+				detail.setQuantity(detail.getQuantity()+1);
+				detail.setPrice(detail.getProduct().getPrice() * detail.getQuantity());
+			}
+		}
+		
+		model.addAttribute("details", orderDetails);
+		
+		return "shoppingCart";
+	}
+	
+	@RequestMapping(value = "/substractOneItem/{id}/**", method = RequestMethod.GET)
+	public String substractOneItem(@PathVariable String id, HttpServletRequest request, Model model){
+		
+		int detailId = Integer.parseInt(new AntPathMatcher().extractPathWithinPattern("/{id}/**", request.getRequestURI())); 
+		
+		for (OrderDetail detail : orderDetails) {
+			if(detail.getId() == detailId){
+				detail.setQuantity(detail.getQuantity()-1);
+				detail.setPrice(detail.getProduct().getPrice() * detail.getQuantity());
+				if(detail.getQuantity() <= 0){
+					orderDetails.remove(detail);
+				}
+			}
+		}
+		
+		model.addAttribute("details", orderDetails);
+		
+		return "shoppingCart";
+	}
+	
+	@RequestMapping(value="/purchase", method=RequestMethod.GET)
+	public String purchase(Model model){
+		
+		Order order = new Order();
+		Order newOrder = null;
+		
+		if(LoginController.getUserLogged() != null){
+			
+			order.setUser(LoginController.getUserLogged());
+			order.setOrderDetails(orderDetails);
+			for (OrderDetail orderDetail : orderDetails) {
+				order.setTotal(order.getTotal() + orderDetail.getProduct().getPrice() * orderDetail.getQuantity());
+				
+				newOrder = shoppingCartService.insertOrder(order);
+			}
+		}else{
+			return "login";
+		}
+		
+		model.addAttribute("order", newOrder);
+		return "invoise";
+	}
+	
 }
