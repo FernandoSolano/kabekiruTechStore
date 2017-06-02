@@ -47,6 +47,16 @@ public class ProductDao {
 		return jdbcTemplate.query(sqlSelect, new findAllProductsExtractor());
 	}
 	
+	public Product findProductById(int productId){
+		String sqlSelect ="CALL sp_product_get("+productId+")";
+		List<Product> products = jdbcTemplate.query(sqlSelect, new findAllProductsExtractor());
+		if(products.isEmpty()){
+			return null;
+		}else{
+			return products.get(0);
+		}
+	}
+	
 	private static final class findAllProductsExtractor implements ResultSetExtractor<List<Product>> {
 		@Override
 		public List<Product> extractData(ResultSet rs) throws SQLException, DataAccessException {
