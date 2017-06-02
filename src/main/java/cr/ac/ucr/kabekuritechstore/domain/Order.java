@@ -1,6 +1,7 @@
 package cr.ac.ucr.kabekuritechstore.domain;
 
 import java.sql.Date;
+import java.util.List;
 
 public class Order {
 	
@@ -11,6 +12,8 @@ public class Order {
 	private Date shipDate;
 	private String trackingNumber;
 	private float total;
+	private List<OrderDetail> orderDetails;
+	
 	
 	public Order() {
 		
@@ -71,8 +74,13 @@ public class Order {
 	public void setTotal(float total) {
 		this.total = total;
 	}
-	
-	
-	
+
+	public List<OrderDetail> getOrderDetails() {
+		return orderDetails;
+	}
+
+	public void setOrderDetails(List<OrderDetail> orderDetails) {
+		this.orderDetails = orderDetails;
+	}
     
 }

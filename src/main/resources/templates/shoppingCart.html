@@ -1,13 +1,14 @@
 <!DOCTYPE html>
 <html>
-<head>
-	<meta charset="UTF-8"/>
-	<title>Shopping Cart</title>
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous"/>
-</head>
-<body style="background: black">
-
-	<nav class="navbar navbar-default" style="background: white">
+	<head>
+		<meta charset="UTF-8"/>
+		<title>Shopping Cart</title>
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous"/>
+	</head>
+	
+	<body style="background: black">
+	
+		<nav class="navbar navbar-default" style="background: white">
 		<div class="container-fluid">
 			<div class="navbar-header">
 				<div class="logo">
@@ -22,7 +23,7 @@
 			</ul>
 			<ul class="nav navbar-nav navbar-right">
 				<li>
-					<a href="#" th:href="@{/cart}"><span class="glyphicon glyphicon-shopping-cart" style="font-size: 1em"></span></a>
+					<a href="#" th:href="@{/cart}"><span class="glyphicon glyphicon-shopping-cart" style="font-size: 2em"></span></a>
 				</li>
 				<li th:if="${userLogged == null}">
 					<a href="#" th:href="@{/login}" style="font-size: 1em"><span class="glyphicon glyphicon-log-in"></span> Login</a>
@@ -33,59 +34,71 @@
 			</ul>
 		</div>
 	</nav>
-	
-	<div class="container">
-		<div th:if="products">
-			<div th:if="${products.isEmpty()}">
-				<p>No hay articulos en el carrito</p>
-			</div>
-			<div th:if="${!products.isEmpty()}" class="table-responsive">
-				<h2>Resultados:</h2>
-				<table class="table table-hover">
-					<tr>
-		   				<th>Nombre</th>
-		   				<th>Descripcion</th>    		
-		   				<th>Categoria</th>
-		   				<th>Precio</th>
-		   				<th>Cantidad</th>
-						<th>Eliminar</th>	    				
-					</tr>
-		  		
-					<tr th:each="entry,status : ${products}">
-			    		<td><span th:text="${entry.name}"></span> </td>
-			    		<td><span th:text="${entry.description}"></span> </td>
-			    		<td><span th:text="${entry.category.name}"></span> </td>
-			    		<td><span th:text="${entry.price}"></span> </td>
-			    		<td><input id="movie" type="number" value="1"/></td>
-			    		<th><a th:href="@{/quitFromCart/{id}(id=${entry.id})}" class="btn btn-danger">Quitar</a></th>
-		 			</tr>
-				</table>
-			</div>
-		</div>
-	</div>
-	<div id="footer" style="background: white">
+		
 		<div class="container">
-			<div class="row">
-				<h3 class="footertext">About the site:</h3>
-				<div class="col-md-4">
-					<center>
-						<img src="http://oi60.tinypic.com/w8lycl.jpg" class="img-circle" alt="the-brains"/> <br/>
-						<h4 class="footertext">Developers</h4>
-						<p class="footertext"/>
-							Dennis Madriz<br/>
-							Fernando Solano<br/>
-							Gustavo Solano<br/>
-					</center>
+			<div th:if="details">
+				<div th:if="${details.isEmpty()}">
+					<p>No hay articulos en el carrito</p>
 				</div>
-				<div class="logo col-md-4">
-					<center><img src="/images/kabekiru_main_logo.png" style="width: 197px; height: 151px" /></center>
-				</div>
-				<div class="logo col-md-4">
-					<center><img src="/images/spring_logo.png" style="width: 188px; height: 110px" /></center>
+				<div th:if="${!details.isEmpty()}" class="well table-responsive">
+				<h2>Resultados:</h2>
+					<table class="table table-hover table-striped">
+						<tr>
+		    				<th class="text-center">Nombre</th>
+		    				<th class="text-center">Descripcion</th>    		
+		    				<th class="text-center">Categoria</th>
+		    				<th class="text-center">Precio</th>
+		    				<th class="text-center">Cantidad</th>
+							<th class="text-center">Eliminar</th>	    				
+		  				</tr>
+		  		
+		  				<tr th:each="entry,status : ${details}">
+				    		<td class="text-center"><span th:text="${entry.product.name}"></span> </td>
+				    		<td class="text-center"><span th:text="${entry.product.description}"></span> </td>
+				    		<td class="text-center"><span th:text="${entry.product.category.name}"></span> </td>
+				    		<td class="text-center"><span th:text="${entry.product.price}"></span> </td>
+				    		<td class="text-center">  
+				    		<input type="number" th:value="${entry.quantity}" disabled="true" width="40"/>
+				    		<a th:href="@{/addOneItem/{id}(id=${entry.id})}" class="glyphicon glyphicon-plus-sign"></a>
+				    		<a th:href="@{/substractOneItem/{id}(id=${entry.id})}" class="glyphicon glyphicon-minus-sign"></a>
+				    		</td>
+				    		<th class="text-center"><a th:href="@{/quitFromCart/{id}(id=${entry.id})}" class="btn btn-danger">Quitar</a></th>
+		 				</tr>
+					</table>
+					<div>
+						<a th:href="@{/purchase}" class="btn btn-primary pull-right">
+							<span class="glyphicon glyphicon-credit-card" /> Purchase	
+						</a>
+						<br/>
+					</div>
 				</div>
 			</div>
 		</div>
-	</div>
+		<br/>
+		<br/>
+		<div id="footer" style="background: white">
+			<div class="container">
+				<div class="row">
+					<h3 class="footertext">About the site:</h3>
+					<div class="col-md-4">
+						<center>
+							<img src="http://oi60.tinypic.com/w8lycl.jpg" class="img-circle" alt="the-brains"/> <br/>
+							<h4 class="footertext">Developers</h4>
+							<p class="footertext"/>
+								Dennis Madriz<br/>
+								Fernando Solano<br/>
+								Gustavo Solano<br/>
+						</center>
+					</div>
+					<div class="logo col-md-4">
+						<center><img src="/images/kabekiru_main_logo.png" style="width: 197px; height: 151px" /></center>
+					</div>
+					<div class="logo col-md-4">
+						<center><img src="/images/spring_logo.png" style="width: 188px; height: 110px" /></center>
+					</div>
+				</div>
+			</div>
+		</div>
 	
-</body>
+	</body>
 </html>

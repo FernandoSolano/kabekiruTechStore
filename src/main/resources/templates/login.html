@@ -23,6 +23,7 @@
 			<ul class="nav navbar-nav navbar-right">
 				<li>
 					<a href="#" th:href="@{/cart}"><span class="glyphicon glyphicon-shopping-cart" style="font-size: 1em"></span></a>
+
 				</li>
 				<li th:if="${userLogged == null}">
 					<a href="#" th:href="@{/login}" style="font-size: 1em"><span class="glyphicon glyphicon-log-in"></span> Login</a>
