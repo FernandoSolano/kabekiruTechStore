@@ -6,25 +6,32 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous"/>
 </head>
 <body style="background:black">
-	<nav class="navbar navbar-default" style="background:white">
-  		<div class="container-fluid">
-    		<div class="navbar-header">
-    			<div class="logo">
-    				<img src="../images/logo.png" style="width:150px; height:115px"/>
-    			</div>
-    		</div>
-    		<ul class="nav navbar-nav">
-    			<li class="active"><a href="#" style="font-size: 2em">Home</a></li>
-    			<li><a href="#" style="font-size: 2em">Computers</a></li>
-    			<li><a href="#" style="font-size: 2em">Smartphones</a></li>
-    			<li><a href="#" style="font-size: 2em">Accesories</a></li>
-    		</ul>
-    		<ul class="nav navbar-nav navbar-right">
-    			<li><a href="#"><span class="glyphicon glyphicon-shopping-cart" style="font-size: 2em"></span></a></li>
-    			<li><a href="#" style="font-size: 2em"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
-    		</ul>
-    	</div>
-    </nav>
+	<nav class="navbar navbar-default" style="background: white">
+		<div class="container-fluid">
+			<div class="navbar-header">
+				<div class="logo">
+					<img src="../images/kabekiru_main_logo_header.png"/>
+				</div>
+			</div>
+			<ul class="nav navbar-nav">
+				<li class="active"><a href="#" style="font-size: 2em">Home</a></li>
+				<li><a href="#" style="font-size: 2em">Computers</a></li>
+				<li><a href="#" style="font-size: 2em">Smartphones</a></li>
+				<li><a href="#" style="font-size: 2em">Accesories</a></li>
+			</ul>
+			<ul class="nav navbar-nav navbar-right">
+				<li>
+					<a href="#"><span class="glyphicon glyphicon-shopping-cart" style="font-size: 2em"></span></a>
+				</li>
+				<li th:if="${userLogged == null}">
+					<a href="#" th:href="@{/login}" style="font-size: 2em"><span class="glyphicon glyphicon-log-in"></span> Login</a>
+				</li>
+				<li th:if="${userLogged != null}">
+					<a href="#" th:href="@{/login}" style="font-size: 2em"><span class="glyphicon glyphicon-log-out"></span> Logout</a>
+				</li>
+			</ul>
+		</div>
+	</nav>
     <div class="container">
     	<form class="well col-md-offset-2 col-md-8">
     		<h1>User Sign Up</h1>
@@ -55,5 +62,28 @@
     		<button type="submit" class="btn btn-primary col-md-offset-8 col-md-4"><span class="glyphicon glyphicon-edit"/>   Submit</button>
     	</form>
     </div>
+    <div id="footer" style="background: white">
+		<div class="container">
+			<div class="row">
+				<h3 class="footertext">About the site:</h3>
+				<div class="col-md-4">
+					<center>
+						<img src="http://oi60.tinypic.com/w8lycl.jpg" class="img-circle" alt="the-brains"/> <br/>
+						<h4 class="footertext">Developers</h4>
+						<p class="footertext"/>
+							Dennis Madriz<br/>
+							Fernando Solano<br/>
+							Gustavo Solano<br/>
+					</center>
+				</div>
+				<div class="logo col-md-4">
+					<center><img src="../images/kabekiru_main_logo.png" style="width: 197px; height: 151px" /></center>
+				</div>
+				<div class="logo col-md-4">
+					<center><img src="../images/spring_logo.png" style="width: 188px; height: 110px" /></center>
+				</div>
+			</div>
+		</div>
+	</div>
 </body>
 </html>

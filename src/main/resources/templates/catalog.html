@@ -14,22 +14,27 @@
 				</div>
 			</div>
 			<ul class="nav navbar-nav">
-				<li class="active"><a href="#" style="font-size: 2em">Home</a></li>
-				<li><a href="#" style="font-size: 2em">Computers</a></li>
-				<li><a href="#" style="font-size: 2em">Smartphones</a></li>
-				<li><a href="#" style="font-size: 2em">Accesories</a></li>
+				<li class="active"><a th:href="@{/catalog}" style="font-size: 2em">Home</a></li>
+				<li><a th:href="@{/catalog/category/(category_id=${1})}" style="font-size: 2em">Laptops</a></li>
+				<li><a th:href="@{/catalog/category/(category_id=${3})}" style="font-size: 2em">Desktops</a></li>
+				<li><a th:href="@{/catalog/category/(category_id=${2})}" style="font-size: 2em">Smartphones</a></li>
 			</ul>
 			<ul class="nav navbar-nav navbar-right">
-				<li><a href="#"><span
-						class="glyphicon glyphicon-shopping-cart" style="font-size: 2em"></span></a></li>
-				<div th:if="${userLogged == null}">
-					<li><a href="#" th:href="@{/login}" style="font-size: 2em"><span
-							class="glyphicon glyphicon-log-in"></span>Login</a></li>
-				</div>	
-				<div th:if="${userLogged != null}">
-				<li><a href="#" th:href="@{/login}" style="font-size: 2em"><span
-						class="glyphicon glyphicon-log-out"></span>Logout</a></li>
-				</div>
+				<li>
+					<form>
+						<a><span class="glyphicon glyphicon-search" style="font-size: 2em"/></a>
+    					<input id="search_product_name" name="search_product_name" type="text" style="font-size: 2em"/>
+					</form>
+				</li>
+				<li>
+					<a href="#"><span class="glyphicon glyphicon-shopping-cart" style="font-size: 2em"></span></a>
+				</li>
+				<li th:if="${userLogged == null}">
+					<a href="#" th:href="@{/login}" style="font-size: 2em"><span class="glyphicon glyphicon-log-in"></span> Login</a>
+				</li>
+				<li th:if="${userLogged != null}">
+					<a href="#" th:href="@{/login}" style="font-size: 2em"><span class="glyphicon glyphicon-log-out"></span> Logout</a>
+				</li>
 			</ul>
 		</div>
 	</nav>
@@ -68,7 +73,7 @@
 				<div class="col-md-4">
 					<center>
 						<img src="http://oi60.tinypic.com/w8lycl.jpg" class="img-circle" alt="the-brains"/> <br/>
-						<h4 class="footertext">Programmers</h4>
+						<h4 class="footertext">Developers</h4>
 						<p class="footertext"/>
 							Dennis Madriz<br/>
 							Fernando Solano<br/>
