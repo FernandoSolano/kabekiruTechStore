@@ -1,5 +1,6 @@
 package cr.ac.ucr.kabekuritechstore.business;
 
+import java.sql.SQLException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,4 +35,15 @@ public class ProductService {
 		return productDao.findProductById(productId);
 	}
 	
+	public Product save(Product product) throws SQLException{
+		return productDao.save(product);
+	}
+   
+	public void deleteProductById(int id) throws SQLException {
+		productDao.deleteProductById(id);
+	}
+	
+	public void updateProduct(Product product) throws SQLException {
+		productDao.updateProduct(product);
+	}
 }

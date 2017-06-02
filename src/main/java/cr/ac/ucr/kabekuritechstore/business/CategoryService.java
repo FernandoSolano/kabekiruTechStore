@@ -1,5 +1,6 @@
 package cr.ac.ucr.kabekuritechstore.business;
 
+import java.sql.SQLException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,5 +21,21 @@ public class CategoryService {
 	
 	public Category insertCategory(Category category){
 		return categoryDao.insertCategory(category);
+	}
+	
+	public void deleteCategoryById(int id) throws SQLException {
+		categoryDao.deleteCategoryById(id);
+	}
+    
+	public void updateCategoria(Category category) throws SQLException {
+		categoryDao.updateCategoria(category);
+	}
+	
+	public List<Category> findCategoriesByName(String name) {
+		return categoryDao.findCategoriesByName(name);
+	}
+	
+	public Category findCategoryByID(int id) {
+		return categoryDao.findCategoryByID(id);
 	}
 }
