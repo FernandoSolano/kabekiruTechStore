@@ -31,6 +31,16 @@ public class LoginController {
 		return "login";
 	}
 	
+	@RequestMapping(value="/logout", method=RequestMethod.GET)
+	public String showLogout(Model model){
+		// se limpia el usuario
+		this.setUserLogged(null);
+		//se limpia el carrito
+		ShoppingCartController.orderDetails.clear();
+		
+		return "login";
+	}
+	
 	@RequestMapping(value="/login/userValidation", method = RequestMethod.POST)
 	public String userValidation(@RequestParam Map<String, String> requestParams, Model model){
 		

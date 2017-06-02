@@ -33,4 +33,5 @@ public class ProductService {
 	public Product findProductById(int productId){
 		return productDao.findProductById(productId);
 	}
+	
 }
