@@ -6,6 +6,7 @@
 </head>
 <body>
 	<h1 th:text= "${mensaje1}"></h1>
-	<td><a th:href="@{/maintenanceCategories}"  class="btn btn-success">Return to Maintenance Categories</a></td>
+	<td th:if="${type = 1}" ><a th:href="@{/maintenanceCategories}"  class="btn btn-success">Return to Categories Maintenance</a></td>
+	<td th:if="${type = 2}" ><a th:href="@{/maintenanceProducts}"  class="btn btn-success">Return to Products Maintenance</a></td>
 </body>
 </html>

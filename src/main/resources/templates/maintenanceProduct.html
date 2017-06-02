@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8" />
+	<title>Maintenance Product</title>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
+	<link rel="stylesheet" type="text/css" media="all" href="css/bootstrap-glyphicons.css"/>
+	<link rel="stylesheet" type="text/css" media="all" href="css/styles.css" />
+</head>
+<body>
+	<center>
+		<h1>Maintenance Product</h1>
+	</center>
+	<center>
+		<form action="#" th:action="@{/maintenanceProducts/search}" method="post">
+			<p>
+				Product Name: <input type="text" name="name" />
+			</p>
+			<p>
+				<input type="submit" value="Search" class="btn btn-info" />
+			</p>
+		</form>
+	</center>
+	<div th:if="${products}">
+		<div th:if="${products.isEmpty()}">
+			<p>no results</p>
+		</div>
+		<div th:if="${!products.isEmpty()}">
+			<p>Found this results</p>
+			<table class="table table-striped table-hover">
+				<tr>
+					<th>ID</th>
+					<th>Category</th>
+					<th>Name</th>
+					<th>Units in stock</th>
+					<th>Description</th>
+					<th>Image url</th>
+					<th>Price</th>
+				</tr>
+				<tr th:each="entry,status : ${products}">
+					<td><span th:text="${entry.id}"></span></td>
+					<td><span th:text="${entry.category.name}"></span></td>
+					<td><span th:text="${entry.name}"></span></td>
+					<td><span th:text="${entry.unitsOnStock}"></span></td>
+					<td><span th:text="${entry.description}"></span></td>
+					<td><span th:text="${entry.image_url}"></span></td>
+					<td><span th:text="${entry.price}"></span></td>
+					<td><a th:href="@{/deleteProduct/{id}(id=${entry.id})}"
+						class="btn btn-danger">Delete</a></td>
+					<td><a th:href="@{/updateProduct/{id}(id=${entry.id})}"
+						class="btn btn-info">Update</a></td>
+				</tr>
+			</table>
+		</div>
+		<td><a th:href="@{/insertProduct}" class="btn btn-success">Insert new Product</a></td>
+	</div>
+</body>
+</html>

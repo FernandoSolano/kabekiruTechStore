@@ -58,7 +58,6 @@ public class CategoryDao {
 	}
 	
 	public Category insertCategory(Category category){
-		System.out.println("******************"+category.getName());
 		SqlParameterSource parameterSource = new MapSqlParameterSource()
 				.addValue("p_name", category.getName());
 		Map<String, Object> outParameter = simpleJdbcCall.execute(parameterSource);

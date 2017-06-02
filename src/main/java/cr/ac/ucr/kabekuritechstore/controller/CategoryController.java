@@ -72,6 +72,7 @@ public class CategoryController {
 		try {
 			categoryService.deleteCategoryById(category.getId());;
 			model.addAttribute("mensaje1","The category was deleted with success");
+			model.addAttribute("type", 1);
 			return "Success";
 		} catch (SQLException e) {
 			model.addAttribute("mensaje1","Oops, an error occurred with the deletion");
@@ -109,7 +110,7 @@ public class CategoryController {
 				categoryService.updateCategoria(category);
 			    
 				model.addAttribute("mensaje1", "Update categoria correctly");
-			
+				model.addAttribute("type", 1);
 				return "Success";
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
@@ -135,6 +136,7 @@ public class CategoryController {
             category.setName(categoryForm.getName());
 			categoryService.insertCategory(category);
 			model.addAttribute("mensaje1","Category insertion was correct");
+			model.addAttribute("type", 1);
 			return "Success";
 		}
 	}

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8" />
+	<title>Update Product</title>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous" />
+</head>
+<body>
+	<div class="container" style="max-width: 600px; padding: 60px 20px;">
+		<h3>Edit the information</h3>
+		<form th:object="${productForm}" th:action="@{/updateProduct/ok}" action="#" method="post" class="well">
+			<label>Category:
+				<select th:field="*{idCategory}" class="form-control">
+					<option th:each="category: ${categories}" th:value="${category.id}" th:text="${category.name}"></option>
+				</select>
+			</label>
+			<div style="clear: both; display: block; height: 10px;"></div>
+			<label>Product Name:</label> <input th:field="*{name}" th:placeholder="${name}" type="text" class="form-control"/>
+			<div th:if="${#fields.hasErrors('name')}" th:errors="*{name}" class="alert alert-danger">ERROR</div>
+			<div style="clear: both; display: block; height: 10px;"></div>
+			<label>Units in stock:</label> <input th:field="*{unitsOnStock}" th:placeholder="${unitsOnStock}" type="text" class="form-control"/>
+			<div th:if="${#fields.hasErrors('unitsOnStock')}" th:errors="*{unitsOnStock}" class="alert alert-danger">ERROR</div>
+			<div style="clear: both; display: block; height: 10px;"></div>
+			<label>Description:</label> <input th:field="*{description}" th:placeholder="${description}" type="text" class="form-control"/>
+			<div th:if="${#fields.hasErrors('description')}" th:errors="*{description}" class="alert alert-danger">ERROR</div>
+			<div style="clear: both; display: block; height: 10px;"></div>
+			<label>Image url:</label> <input th:field="*{image_url}" th:placeholder="${image_url}" type="text" class="form-control"/>
+			<div th:if="${#fields.hasErrors('image_url')}" th:errors="*{image_url}" class="alert alert-danger">ERROR</div>
+			<div style="clear: both; display: block; height: 10px;"></div>
+			<label>Price:</label> <input th:field="*{price}" th:placeholder="${price}" type="text" class="form-control"/>
+			<div th:if="${#fields.hasErrors('price')}" th:errors="*{price}" class="alert alert-danger">ERROR</div>
+			<div style="clear: both; display: block; height: 10px;"></div>
+			<button type="submit" class="btn btn-success">
+				<span class="glyphicon glyphicon-thumbs-up"></span> Update
+			</button>
+		</form>
+	</div>
+</body>
+</html>

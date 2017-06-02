@@ -27,20 +27,18 @@ import cr.ac.ucr.kabekuritechstore.domain.Product;
 @Repository
 public class ProductDao {
 	private JdbcTemplate jdbcTemplate;
-	private SimpleJdbcCall simpleJdbcCall;
+	private SimpleJdbcCall simpleJdbcCallProduct;
+	private SimpleJdbcCall simpleJdbcCallDelete;
+	private SimpleJdbcCall simpleJdbcCallUpdate;
+	
+	@Autowired
+	private DataSource dataSource;
 	
 	@Autowired
 	public void setDataSource(DataSource dataSource) {
+		this.dataSource = dataSource;
 		this.jdbcTemplate = new JdbcTemplate(dataSource);
-		this.simpleJdbcCall= new SimpleJdbcCall(dataSource)				
-				.withProcedureName("InsertarLibro")
-				.withoutProcedureColumnMetaDataAccess()
-				.declareParameters(new SqlOutParameter("@numLibro", Types.INTEGER))
-				.declareParameters(new SqlParameter("@tituloLibro",Types.VARCHAR))
-				.declareParameters(new SqlParameter("@anoPublicacion",Types.INTEGER))
-				.declareParameters(new SqlParameter("@isbn",Types.VARCHAR))
-				.declareParameters(new SqlParameter("@codPublicador",Types.INTEGER))
-				.declareParameters(new SqlParameter("@precio",Types.FLOAT));
+		this.simpleJdbcCallProduct = new SimpleJdbcCall(dataSource).withProcedureName("sp_product_insert");
 	}
 	
 	public List<Product> findAll(){
@@ -76,31 +74,42 @@ public class ProductDao {
 		}
 	}
 	
-	/*@Transactional
-	public Libro save(Libro libro) throws SQLException{
+	@Transactional
+	public Product save(Product product) throws SQLException{
 		SqlParameterSource parameterSource = new MapSqlParameterSource()
-				.addValue("@tituloLibro", libro.getTituloLibro())
-				.addValue("@anoPublicacion", libro.getAnoPublicacion())						
-				.addValue("@isbn", libro.getIsbn())	
-				.addValue("@codPublicador", libro.getPublicador().getCodPublicador())
-				.addValue("@precio",libro.getPrecio());
-		Map<String, Object> outParameter = simpleJdbcCallLibro.execute(parameterSource);
-		libro.setNumLibro(Integer.parseInt((outParameter.get("@numLibro").toString())));
-		
-		for(Autor autor : libro.getAutores()){
-			insertLibroAutor(libro.getNumLibro(),autor.getCodAutor());
-		}
-			
-		return libro;
+				.addValue("p_category_id", product.getCategory().getId())						
+				.addValue("p_name", product.getName())
+				.addValue("p_description", product.getDescription())
+				.addValue("p_price", product.getPrice())
+				.addValue("p_units_on_stock", product.getUnitsOnStock())
+				.addValue("p_image_url",product.getImage_url());
+		Map<String, Object> outParameter = simpleJdbcCallProduct.execute(parameterSource);
+		product.setId((Integer.parseInt((outParameter.get("p_id").toString()))));
+		return product;
 	}
 	
 	@Transactional
-	public void insertLibroAutor(int codLibro,int codAutor) throws SQLException{
+	public void deleteProductById(int id) throws SQLException {
+		simpleJdbcCallDelete = new SimpleJdbcCall(dataSource)
+				.withProcedureName("sp_product_get");
 		SqlParameterSource parameterSource = new MapSqlParameterSource()
-				.addValue("@numLibro", codLibro)
-				.addValue("@codAutor", codAutor);
-		simpleJdbcAutor.execute(parameterSource);
-	}*/
+				.addValue("id", id);
+		simpleJdbcCallDelete.execute(parameterSource);
+	}
+	
+	@Transactional
+	public void updateProduct(Product product) throws SQLException {
+		simpleJdbcCallUpdate = new SimpleJdbcCall(dataSource)
+				.withProcedureName("sp_product_update");
+		SqlParameterSource parameterSource = new MapSqlParameterSource()
+				.addValue("p_category_id", product.getCategory().getId())						
+				.addValue("p_name", product.getName())
+				.addValue("p_description", product.getDescription())
+				.addValue("p_price", product.getPrice())
+				.addValue("p_units_on_stock", product.getUnitsOnStock())
+				.addValue("p_image_url",product.getImage_url());
+		simpleJdbcCallUpdate.execute(parameterSource);
+	}
 	
 	private static final class findAllProductsExtractor implements ResultSetExtractor<List<Product>> {
 		@Override
