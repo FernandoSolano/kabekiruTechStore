@@ -2,14 +2,19 @@ package cr.ac.ucr.kabekuritechstore.controller;
 
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.AntPathMatcher;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import cr.ac.ucr.kabekuritechstore.business.ProductService;
+import cr.ac.ucr.kabekuritechstore.domain.Product;
 
 @Controller
 public class ShowCatalogController {
@@ -49,5 +54,15 @@ public class ShowCatalogController {
 		//Call method findProductsByRangeOfPriceAndName in business with both parameters and name
 		model.addAttribute("products", productService.findProductsByRangeOfPriceAndName(productName, Integer.parseInt(productMinPrice), Integer.parseInt(productMaxPrice)));
 		return "catalog;";
+	}
+	
+	@RequestMapping(value = "/viewDetails/{id}/**", method = RequestMethod.GET)
+	public String viewDetails(@PathVariable String id, HttpServletRequest request, Model model){
+		
+		int productId = Integer.parseInt(new AntPathMatcher().extractPathWithinPattern("/{id}/**", request.getRequestURI())); 
+		
+		model.addAttribute("product", productService.findProductById(productId));
+		
+		return "productDetail";
 	}
 }
