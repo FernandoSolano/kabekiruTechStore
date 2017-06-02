@@ -28,4 +28,26 @@ public class ShowCatalogController {
 		model.addAttribute("products", productService.findProductsByCategory(categoryID));
 		return "catalog";
 	}
+	
+	@RequestMapping(value="/catalog/product", method=RequestMethod.GET)
+	public String showProductsByName(@RequestParam Map<String, String> requestParams, Model model){
+		String productName=requestParams.get("product_name");
+		String productMinPrice=requestParams.get("min_price");
+		String productMaxPrice=requestParams.get("max_price");
+		if((productMinPrice.equals("0") || productMinPrice.equals("")) && (productMaxPrice.equals("max") || productMaxPrice.equals(""))){
+			model.addAttribute("products", productService.findProductsByName(productName));
+			return "catalog";
+		}else if((productMaxPrice.equals("max") || productMaxPrice.equals(""))){
+			//Call method findProductsByRangeOfPriceAndName in business with min parameter
+			model.addAttribute("products", productService.findProductsByRangeOfPriceAndName(productName, Integer.parseInt(productMinPrice), 9999999));
+			return "catalog";
+		}else if((productMinPrice.equals("0") || productMinPrice.equals(""))){
+			//Call method findProductsByRangeOfPriceAndName in business with max parameter
+			model.addAttribute("products", productService.findProductsByRangeOfPriceAndName(productName, 0, Integer.parseInt(productMaxPrice)));
+			return "catalog";
+		}
+		//Call method findProductsByRangeOfPriceAndName in business with both parameters and name
+		model.addAttribute("products", productService.findProductsByRangeOfPriceAndName(productName, Integer.parseInt(productMinPrice), Integer.parseInt(productMaxPrice)));
+		return "catalog;";
+	}
 }

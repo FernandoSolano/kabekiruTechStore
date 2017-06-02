@@ -21,4 +21,12 @@ public class ProductService {
 	public List<Product> findProductsByCategory(int category_id){
 		return productDao.findProductsByCategory(category_id);
 	}
+	
+	public List<Product> findProductsByName(String product_name){
+		return productDao.findProductsByName(product_name);
+	}
+	
+	public List<Product> findProductsByRangeOfPriceAndName(String product_name, int minPrice, int maxPrice){
+		return productDao.findProductsByRangeOfPriceAndName(product_name, minPrice, maxPrice);
+	}
 }

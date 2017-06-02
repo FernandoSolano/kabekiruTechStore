@@ -21,12 +21,10 @@ import cr.ac.ucr.kabekuritechstore.domain.Product;
 @Repository
 public class ProductDao {
 	private JdbcTemplate jdbcTemplate;
-	private SimpleJdbcCall simpleJdbcCall;
 	
 	@Autowired
 	public void setDataSource(DataSource dataSource) {
 		this.jdbcTemplate = new JdbcTemplate(dataSource);
-		this.simpleJdbcCall = new SimpleJdbcCall(dataSource).withProcedureName("sp_product_get_by_category");
 	}
 	
 	public List<Product> findAll(){
@@ -39,11 +37,19 @@ public class ProductDao {
 		return jdbcTemplate.query(sqlSelect, new findAllProductsExtractor());
 	}
 	
-	public List<Product> findProductsByName(int category_id){
+	public List<Product> findProductsByName(String product_name){
 		String sqlSelect = "SELECT p.id, p.name, p.image_url, p.description,"
 				+ " p.price, p.units_on_stock, c.id AS category_id, c.name AS category_name"
 				+ " FROM products p, categories c"
-				+ " WHERE p.category_id=c.id AND p.category_id="+category_id;
+				+ " WHERE p.category_id=c.id AND p.name LIKE '%"+product_name+"%'";
+		return jdbcTemplate.query(sqlSelect, new findAllProductsExtractor());
+	}
+	
+	public List<Product> findProductsByRangeOfPriceAndName(String product_name, int minPrice, int maxPrice){
+		String sqlSelect = "SELECT p.id, p.name, p.image_url, p.description,"
+				+ " p.price, p.units_on_stock, c.id AS category_id, c.name AS category_name"
+				+ " FROM products p, categories c"
+				+ " WHERE p.category_id=c.id AND p.name LIKE '%"+product_name+"%' AND p.price BETWEEN "+minPrice+" AND "+maxPrice;
 		return jdbcTemplate.query(sqlSelect, new findAllProductsExtractor());
 	}
 	
