@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import cr.ac.ucr.kabekuritechstore.business.ProductService;
 import cr.ac.ucr.kabekuritechstore.business.UserService;
 import cr.ac.ucr.kabekuritechstore.domain.User;
 
@@ -17,6 +18,9 @@ public class LoginController {
 	
 	@Autowired
 	UserService userService;
+	
+	@Autowired
+	ProductService productService;
 	
 	// variable estatica para el manejo de usuario registrado
 	private static User userLogged;
@@ -41,6 +45,7 @@ public class LoginController {
 			if(userLogged.getRoleId().getType().equals("ADMIN")){
 				return "login";
 			}else{
+				model.addAttribute("products", productService.findAll());
 				return "catalog";
 			}
 		}
