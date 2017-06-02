@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8" />
+	<title>Delete Category</title>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous" />
+</head>
+<body>
+	<div class="row">
+		<div class="col-sm-8">
+			<div class="form-group">
+				<h1 th:text="|${name}|"></h1>
+				<label>Category ID:</label> <label th:text="${id}"></label>
+			</div>
+			<div class="form-group">
+				<label>Are you sure want to delete it?:</label>
+			</div>
+		</div>
+	</div>
+	<br/>
+	<a th:href="@{/deleteCategory/delete}" class="btn btn-danger">Delete</a>
+	<a th:href="@{/maintenanceCategories}" class="btn btn-success">Cancel</a>
+</body>
+</html>

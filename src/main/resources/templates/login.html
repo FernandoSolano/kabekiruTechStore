@@ -11,24 +11,24 @@
 		<div class="container-fluid">
 			<div class="navbar-header">
 				<div class="logo">
-					<img src="../images/kabekiru_main_logo_header.png"/>
+					<a th:href="@{/catalog}"><img src="/images/kabekiru_main_logo_header.png"/></a>
 				</div>
 			</div>
 			<ul class="nav navbar-nav">
-				<li class="active"><a href="#" style="font-size: 2em">Home</a></li>
-				<li><a href="#" style="font-size: 2em">Computers</a></li>
-				<li><a href="#" style="font-size: 2em">Smartphones</a></li>
-				<li><a href="#" style="font-size: 2em">Accesories</a></li>
+				<li><a th:href="@{/catalog/category/(category_id=${1})}" style="font-size: 1em">Laptops</a></li>
+				<li><a th:href="@{/catalog/category/(category_id=${3})}" style="font-size: 1em">Desktops</a></li>
+				<li><a th:href="@{/catalog/category/(category_id=${2})}" style="font-size: 1em">Smartphones</a></li>
+				<li><a th:href="@{/catalog/category/(category_id=${4})}" style="font-size: 1em">VR</a></li>
 			</ul>
 			<ul class="nav navbar-nav navbar-right">
 				<li>
-					<a href="#"><span class="glyphicon glyphicon-shopping-cart" style="font-size: 2em"></span></a>
+					<a href="#" th:href="@{/cart}"><span class="glyphicon glyphicon-shopping-cart" style="font-size: 1em"></span></a>
 				</li>
 				<li th:if="${userLogged == null}">
-					<a href="#" th:href="@{/login}" style="font-size: 2em"><span class="glyphicon glyphicon-log-in"></span> Login</a>
+					<a href="#" th:href="@{/login}" style="font-size: 1em"><span class="glyphicon glyphicon-log-in"></span> Login</a>
 				</li>
 				<li th:if="${userLogged != null}">
-					<a href="#" th:href="@{/login}" style="font-size: 2em"><span class="glyphicon glyphicon-log-out"></span> Logout</a>
+					<a href="#" th:href="@{/login}" style="font-size: 1em"><span class="glyphicon glyphicon-log-out"></span> Logout</a>
 				</li>
 			</ul>
 		</div>
@@ -44,7 +44,7 @@
     			<label for="password">Password</label>
     			<input id="password" name="password" type="password" required="true" class="form-control"/>
     		</div>
-    		<button type="submit" class="btn btn-primary col-md-offset-8 col-md-4"><span class="glyphicon glyphicon-log-in"/>Login</button>
+    		<button type="submit" class="btn btn-primary col-md-offset-8 col-md-4"><span class="glyphicon glyphicon-log-in"/> Login</button>
     	</form>
     </div>
     <div id="footer" style="background: white">
@@ -62,10 +62,10 @@
 					</center>
 				</div>
 				<div class="logo col-md-4">
-					<center><img src="../images/kabekiru_main_logo.png" style="width: 197px; height: 151px" /></center>
+					<center><img src="/images/kabekiru_main_logo.png" style="width: 197px; height: 151px" /></center>
 				</div>
 				<div class="logo col-md-4">
-					<center><img src="../images/spring_logo.png" style="width: 188px; height: 110px" /></center>
+					<center><img src="/images/spring_logo.png" style="width: 188px; height: 110px" /></center>
 				</div>
 			</div>
 		</div>
