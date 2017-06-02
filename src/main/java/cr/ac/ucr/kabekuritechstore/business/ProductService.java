@@ -29,4 +29,8 @@ public class ProductService {
 	public List<Product> findProductsByRangeOfPriceAndName(String product_name, int minPrice, int maxPrice){
 		return productDao.findProductsByRangeOfPriceAndName(product_name, minPrice, maxPrice);
 	}
+
+	public Product findProductById(int productId){
+		return productDao.findProductById(productId);
+	}
 }

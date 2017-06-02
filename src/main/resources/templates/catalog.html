@@ -10,7 +10,7 @@
 		<div class="container-fluid">
 			<div class="navbar-header">
 				<div class="logo">
-					<a th:href="@{/catalog}"><img src="../images/kabekiru_main_logo_header.png"/></a>
+					<a th:href="@{/catalog}"><img src="/images/kabekiru_main_logo_header.png"/></a>
 				</div>
 			</div>
 			<ul class="nav navbar-nav">
@@ -21,7 +21,7 @@
 			</ul>
 			<ul class="nav navbar-nav navbar-right">
 				<li>
-					<a href="#"><span class="glyphicon glyphicon-shopping-cart" style="font-size: 1em"></span></a>
+					<a href="#" th:href="@{/cart}"><span class="glyphicon glyphicon-shopping-cart" style="font-size: 2em"></span></a>
 				</li>
 				<li th:if="${userLogged == null}">
 					<a href="#" th:href="@{/login}" style="font-size: 1em"><span class="glyphicon glyphicon-log-in"></span> Login</a>
@@ -64,9 +64,9 @@
 						<button class="btn btn-success">
 							<span class="glyphicon glyphicon-search" /> Details
 						</button>
-						<button class="btn btn-primary pull-right">
-							<span class="glyphicon glyphicon-shopping-cart" /> Add to cart
-						</button>
+						<a th:href="@{/addCart/{id}(id=${entry.id})}" class="btn btn-primary pull-right">
+						<span class="glyphicon glyphicon-shopping-cart" /> Add to Cart
+						</a>
 					</div>
 					
 				</div>
@@ -88,10 +88,10 @@
 					</center>
 				</div>
 				<div class="logo col-md-4">
-					<center><img src="../images/kabekiru_main_logo.png" style="width: 197px; height: 151px" /></center>
+					<center><img src="/images/kabekiru_main_logo.png" style="width: 197px; height: 151px" /></center>
 				</div>
 				<div class="logo col-md-4">
-					<center><img src="../images/spring_logo.png" style="width: 188px; height: 110px" /></center>
+					<center><img src="/images/spring_logo.png" style="width: 188px; height: 110px" /></center>
 				</div>
 			</div>
 		</div>
