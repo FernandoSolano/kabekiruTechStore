@@ -10,7 +10,7 @@
 		<h1>Insert new Product</h1>
 		<form th:object="${productForm}" action="#" th:action="@{/insertProduct/save}" method="post"  class="well">
 		   <label>Category:
-				<select th:field="*{idCategory}" class="form-control">
+				<select name="idCategory" th:field="*{idCategory}" class="form-control">
 					<option th:each="category: ${categories}" th:value="${category.id}" th:text="${category.name}"></option>
 				</select>
 			</label>

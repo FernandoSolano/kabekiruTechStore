@@ -26,7 +26,7 @@ public class ProductForm {
     }
  
  
-    public void setIdCategoria(int idCategory) {
+    public void setIdCategory(int idCategory) {
         this.idCategory = idCategory;
     }
  

@@ -80,9 +80,7 @@ public class CategoryDao {
 				.withProcedureName("sp_category_update");
 		SqlParameterSource parameterSource = new MapSqlParameterSource()
 				.addValue("p_id", category.getId())
-				.addValue("p_name", category.getName())				
-				;
-		
+				.addValue("p_name", category.getName());
 		simpleJdbcCallUpdate.execute(parameterSource);
 	}
 	

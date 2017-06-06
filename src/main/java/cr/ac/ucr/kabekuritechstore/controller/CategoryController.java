@@ -36,9 +36,8 @@ public class CategoryController {
 	
 	@RequestMapping(value ="/maintenanceCategories",method=RequestMethod.GET)
 	public String star(Model model){
-		
+		categories =   categoryService.findCategoriesByName("");
 		model.addAttribute("categories",categories);
-		
 		return "maintenanceCategory";
 	}
 	
@@ -71,11 +70,11 @@ public class CategoryController {
 	public String delete(Model model) {		
 		try {
 			categoryService.deleteCategoryById(category.getId());;
-			model.addAttribute("mensaje1","The category was deleted with success");
+			model.addAttribute("mensaje","The category was deleted with success");
 			model.addAttribute("type", 1);
 			return "Success";
 		} catch (SQLException e) {
-			model.addAttribute("mensaje1","Oops, an error occurred with the deletion");
+			model.addAttribute("mensaje","Oops, an error occurred with the deletion");
 			return "Error";
 		}
 	
@@ -109,12 +108,12 @@ public class CategoryController {
 			try {
 				categoryService.updateCategoria(category);
 			    
-				model.addAttribute("mensaje1", "Update categoria correctly");
+				model.addAttribute("mensaje", "Update categoria correctly");
 				model.addAttribute("type", 1);
 				return "Success";
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
-				model.addAttribute("mensaje1", "Error with the update");
+				model.addAttribute("mensaje", "Error with the update");
 				
 				return "Error";
 			}
@@ -135,7 +134,7 @@ public class CategoryController {
 			Category category =  new Category();
             category.setName(categoryForm.getName());
 			categoryService.insertCategory(category);
-			model.addAttribute("mensaje1","Category insertion was correct");
+			model.addAttribute("mensaje","Category insertion was correct");
 			model.addAttribute("type", 1);
 			return "Success";
 		}
