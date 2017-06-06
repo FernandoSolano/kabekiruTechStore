@@ -41,9 +41,8 @@ public class ProductController {
 	
 	@RequestMapping(value ="/maintenanceProducts",method=RequestMethod.GET)
 	public String star(Model model){
-		
+		products =   productService.findProductsByName("");
 		model.addAttribute("products",products);
-		
 		return "maintenanceProduct";
 	}
 	
@@ -51,38 +50,36 @@ public class ProductController {
 	 public String search(@RequestParam Map<String,String> requestParams, Model model){
 		
 		String name = requestParams.get("name");
-		 
-            products =   productService.findProductsByName(name);	
-			
-			model.addAttribute("products",products);
-		
+		products =   productService.findProductsByName(name);
+		model.addAttribute("products",products);
 		return "maintenanceProduct";
 	}
 	
-	@RequestMapping(value = "deleteProducts/{id}**", method = RequestMethod.GET)
+	@RequestMapping(value = "deleteProduct/{id}**", method = RequestMethod.GET)
 	public String starDelete(@PathVariable int id, HttpServletRequest request, Model model) {
 		
 		int cod = Integer.parseInt(new AntPathMatcher().extractPathWithinPattern("/{id}/**", request.getRequestURI()));
+		
 		product = productService.findProductById(cod);
 		
 		model.addAttribute("id", product.getId());		
 		model.addAttribute("name", product.getName());
 		
-
 		return "deleteProduct";
 	}
 	
-	@RequestMapping(value = "deleteProduct/delete", method=RequestMethod.GET)
-	public String delete(Model model) {		
+	@RequestMapping(value = "deleteProduct/confirm", method=RequestMethod.GET)
+	public String delete(Model model, @RequestParam Map<String, String> requestParams) {		
 		try {
-			productService.deleteProductById(product.getId());
+			int productID = Integer.parseInt(requestParams.get("p_id"));
+			productService.deleteProductById(productID);
 			
-			model.addAttribute("mensaje1","The product was deleted with success");
+			model.addAttribute("mensaje","The product was deleted successfully");
 			model.addAttribute("type", 2);
 			return "Success";
 		} catch (SQLException e) {
-			model.addAttribute("mensaje1","Oops, an error occurred with the deletion");
-			
+			model.addAttribute("mensaje","Oops, an error occurred with the deletion");
+			model.addAttribute("type", 2);
 			return "Error";
 		}
 	
@@ -116,24 +113,23 @@ public class ProductController {
 			Product product =  new Product();
             
             product.setName(productForm.getName());
-            BeanUtils.copyProperties(productForm, product);
 			product.getCategory().setId((productForm.getIdCategory()));
-           /* product.setUnitsOnStock(productForm.getUnitsOnStock());
+			product.setUnitsOnStock(productForm.getUnitsOnStock());
             product.setDescription(productForm.getDescription());
             product.setImage_url(productForm.getImage_url());
-            product.setPrice(productForm.getPrice());*/
+            product.setPrice(productForm.getPrice());
             product.setId(cod);
 			
 			try {
 				productService.updateProduct(product);
 				
 			    
-				model.addAttribute("mensaje1", "Update product correctly");
+				model.addAttribute("mensaje", "Update product correctly");
 				model.addAttribute("type", 2);
 				return "Success";
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
-				model.addAttribute("mensaje1", "Error with the update");
+				model.addAttribute("mensaje", "Error with the update");
 				
 				return "Error";
 			}
@@ -155,16 +151,14 @@ public class ProductController {
 			Product product =  new Product();
             
             product.setName(productForm.getName());
-            BeanUtils.copyProperties(productForm, product);
 			product.getCategory().setId((productForm.getIdCategory()));
             product.setUnitsOnStock(productForm.getUnitsOnStock());
             product.setDescription(productForm.getDescription());
             product.setImage_url(productForm.getImage_url());
             product.setPrice(productForm.getPrice());
-            
 			
             productService.save(product);
-			model.addAttribute("mensaje1","Product insertion was correct");
+			model.addAttribute("mensaje","Product insertion was correct");
 			model.addAttribute("type", 2);
 			return "Success";
 		}

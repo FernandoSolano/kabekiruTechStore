@@ -91,9 +91,9 @@ public class ProductDao {
 	@Transactional
 	public void deleteProductById(int id) throws SQLException {
 		simpleJdbcCallDelete = new SimpleJdbcCall(dataSource)
-				.withProcedureName("sp_product_get");
+				.withProcedureName("sp_product_delete");
 		SqlParameterSource parameterSource = new MapSqlParameterSource()
-				.addValue("id", id);
+				.addValue("p_id", id);
 		simpleJdbcCallDelete.execute(parameterSource);
 	}
 	
@@ -102,6 +102,7 @@ public class ProductDao {
 		simpleJdbcCallUpdate = new SimpleJdbcCall(dataSource)
 				.withProcedureName("sp_product_update");
 		SqlParameterSource parameterSource = new MapSqlParameterSource()
+				.addValue("p_id", product.getId())
 				.addValue("p_category_id", product.getCategory().getId())						
 				.addValue("p_name", product.getName())
 				.addValue("p_description", product.getDescription())
